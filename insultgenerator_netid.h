@@ -1,44 +1,39 @@
-#include <stdexcept>
+#pragma once
 #include <string>
 #include <vector>
-#include <fstream>
 
 using namespace std;
-#pragma once
+
+const string SOURCE_FILE("InsultsSource.txt");
 
 class FileException {
    public:
-	FileException(const string& message);
-	string& what();
+	FileException(const string&);
+	string what() const;
 private:
 	string message;
 };
 
-class TextFileIO {
-public:
-	TextFileIO(const string& filename);
-	vector<string> readFile() const;
-	int writeFile(const vector<string>& contents) const;
-private:
-	string filename;
-};
-
 class NumInsultsOutOfBounds {
-
+	public:
+		NumInsultsOutOfBounds(const string&);
+		string what() const;
+	private:
+		string message;
 };
 
 class InsultGenerator {
-	private:
-		vector<string> insults;
-
     public: 
-	int initialize() {
-
-	};
-int generate(int num) {
-	for(int i = 0; i < num; i++) {
-		srand(time(0));
-	}
+		void initialize(); 						// Loads the attribute contents from the source file.
+	    string talkToMe() const;
+		vector<string> generate(int) const;
+		void generateAndSave(string, int) const;	
+	private:
+		int sourceSize;
+		vector<string> part1;
+		vector<string> part2;
+		vector<string> part3;
+		int randInt(int) const;
 };
 
 // generate random ints from 1 to 10,000
@@ -51,4 +46,4 @@ int generate(int num) {
 // Initilize reads file into attributes
 // talkToMe() returns a single insult, generated at random.
 //<set> sorts automatically
-// srand(time(0))
+
